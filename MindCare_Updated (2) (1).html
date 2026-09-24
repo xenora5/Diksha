@@ -1,0 +1,2408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MindCare</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --purple:#8f7ac8;
+    --purple-dark:#65539b;
+    --lavender:#f1edfa;
+    --lavender-light:#faf8ff;
+    --green:#b9dcca;
+    --green-light:#eef8f2;
+    --pink:#efd1dc;
+    --yellow:#f3dfae;
+    --red:#e8a0a5;
+    --text:#302b40;
+    --muted:#777285;
+    --white:#ffffff;
+    --border:#e7e1f1;
+    --shadow:0 10px 30px rgba(76,58,115,0.08);
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+    background:#faf9fd;
+    color:var(--text);
+}
+
+/* ================= LOGIN ================= */
+
+#loginPage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:30px;
+    background:linear-gradient(135deg,#f4effd,#edf8f2);
+}
+
+.login-box{
+    width:450px;
+    max-width:100%;
+    background:white;
+    border-radius:28px;
+    padding:40px;
+    box-shadow:var(--shadow);
+}
+
+.logo{
+    color:var(--purple);
+    font-size:32px;
+    font-weight:800;
+    margin-bottom:8px;
+}
+
+.login-title{
+    font-size:27px;
+    margin-bottom:8px;
+}
+
+.login-description{
+    color:var(--muted);
+    margin-bottom:25px;
+    line-height:1.6;
+}
+
+.login-tabs{
+    display:flex;
+    background:var(--lavender);
+    padding:5px;
+    border-radius:14px;
+    margin-bottom:25px;
+}
+
+.login-tabs button{
+    flex:1;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    background:transparent;
+    color:var(--muted);
+    cursor:pointer;
+}
+
+.login-tabs button.active{
+    background:white;
+    color:var(--purple-dark);
+    font-weight:bold;
+}
+
+.form-group{
+    margin-bottom:17px;
+}
+
+.form-group label{
+    display:block;
+    font-size:14px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:14px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    outline:none;
+    font-size:15px;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:var(--purple);
+}
+
+.primary-button{
+    width:100%;
+    border:none;
+    background:var(--purple);
+    color:white;
+    padding:14px;
+    border-radius:13px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.primary-button:hover{
+    background:var(--purple-dark);
+}
+
+.small-note{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:12px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* ================= APP ================= */
+
+#app{
+    display:none;
+}
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:white;
+    border-right:1px solid var(--border);
+    padding:25px 15px;
+    z-index:10;
+}
+
+.sidebar-logo{
+    font-size:27px;
+    font-weight:800;
+    color:var(--purple);
+    padding:0 12px 28px;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+}
+
+.nav button{
+    border:none;
+    background:transparent;
+    text-align:left;
+    padding:13px 14px;
+    border-radius:12px;
+    color:#625d70;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.nav button:hover,
+.nav button.active{
+    background:var(--lavender);
+    color:var(--purple-dark);
+}
+
+.nav .emergency{
+    color:#b34f57;
+    background:#fff3f3;
+}
+
+.profile-mini{
+    position:absolute;
+    left:15px;
+    right:15px;
+    bottom:20px;
+    padding:14px;
+    border-radius:15px;
+    background:var(--lavender);
+}
+
+.profile-mini strong{
+    display:block;
+    margin-bottom:3px;
+}
+
+.profile-mini span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:245px;
+    min-height:100vh;
+}
+
+.topbar{
+    height:75px;
+    background:white;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:5;
+}
+
+.search{
+    width:420px;
+    max-width:55%;
+    padding:12px 16px;
+    border:1px solid var(--border);
+    background:#faf9fd;
+    border-radius:14px;
+    outline:none;
+}
+
+.top-actions{
+    display:flex;
+    gap:9px;
+}
+
+.icon-button{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:12px;
+    background:var(--lavender);
+    color:var(--purple-dark);
+    cursor:pointer;
+    font-size:17px;
+}
+
+.content{
+    padding:30px;
+    max-width:1250px;
+    margin:auto;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.eyebrow{
+    color:var(--purple);
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.page-title{
+    font-size:34px;
+    margin:5px 0 8px;
+}
+
+.page-description{
+    color:var(--muted);
+    margin-bottom:24px;
+}
+
+/* ================= CARDS ================= */
+
+.hero{
+    background:linear-gradient(135deg,#eee7fb,#edf8f2);
+    border-radius:25px;
+    padding:30px;
+    margin-bottom:22px;
+}
+
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:21px;
+    box-shadow:var(--shadow);
+}
+
+.card h2{
+    font-size:21px;
+    margin-bottom:7px;
+}
+
+.card-description{
+    color:var(--muted);
+    font-size:14px;
+}
+
+.section-title{
+    margin:28px 0 15px;
+    font-size:23px;
+}
+
+/* ================= CARE ================= */
+
+.care-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:15px;
+}
+
+.care-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:#faf9fd;
+    border-radius:13px;
+    padding:13px;
+}
+
+.care-item input{
+    width:19px;
+    height:19px;
+}
+
+.care-info{
+    flex:1;
+}
+
+.care-info strong{
+    display:block;
+    font-size:14px;
+}
+
+.care-info span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.time{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.progress{
+    height:8px;
+    background:#ece8f2;
+    border-radius:20px;
+    margin:15px 0;
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:50%;
+    height:100%;
+    background:var(--purple);
+}
+
+/* ================= BUTTONS ================= */
+
+.small-button{
+    border:none;
+    padding:9px 12px;
+    border-radius:10px;
+    background:var(--lavender);
+    color:var(--purple-dark);
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.green-button{
+    background:var(--green-light);
+    color:#4e8769;
+}
+
+.button-row{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+/* ================= GAMES ================= */
+
+.game-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:17px;
+}
+
+.game-card{
+    min-height:205px;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:21px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:var(--shadow);
+}
+
+.game-icon{
+    font-size:35px;
+    margin-bottom:12px;
+}
+
+.game-card h3{
+    margin-bottom:5px;
+}
+
+.game-card p{
+    color:var(--muted);
+    font-size:13px;
+    margin-bottom:15px;
+}
+
+.game-card button{
+    margin-top:auto;
+    border:none;
+    background:var(--purple);
+    color:white;
+    padding:11px;
+    border-radius:11px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* ================= GAME AREA ================= */
+
+.game-area{
+    margin-top:20px;
+    padding:22px;
+    border-radius:18px;
+    background:#faf9fd;
+    min-height:170px;
+}
+
+.memory-board{
+    display:grid;
+    grid-template-columns:repeat(4,65px);
+    gap:8px;
+    margin-top:15px;
+}
+
+.memory-board button{
+    height:65px;
+    border:none;
+    border-radius:12px;
+    background:var(--lavender);
+    font-size:24px;
+    color:transparent;
+    cursor:pointer;
+}
+
+.memory-board button.revealed{
+    background:white;
+    color:var(--text);
+}
+
+/* ================= BLOCK GAME ================= */
+
+.block-board{
+    display:grid;
+    grid-template-columns:repeat(8,42px);
+    gap:4px;
+    margin-top:15px;
+}
+
+.block-board button{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:7px;
+    background:#e9e4f4;
+    cursor:pointer;
+}
+
+.block-board button.filled{
+    background:var(--purple);
+}
+
+/* ================= SUDOKU ================= */
+
+.sudoku{
+    display:grid;
+    grid-template-columns:repeat(4,55px);
+    gap:4px;
+    margin-top:15px;
+}
+
+.sudoku input{
+    width:55px;
+    height:55px;
+    text-align:center;
+    border:1px solid var(--border);
+    border-radius:8px;
+    font-weight:bold;
+}
+
+/* ================= PEOPLE ================= */
+
+.people{
+    display:flex;
+    flex-direction:column;
+    gap:11px;
+    margin-top:16px;
+}
+
+.person{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:13px;
+    background:#faf9fd;
+    border-radius:14px;
+}
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:#e5ddf6;
+    color:var(--purple-dark);
+    display:grid;
+    place-items:center;
+    font-weight:bold;
+}
+
+.person-info{
+    flex:1;
+}
+
+.person-info strong{
+    display:block;
+}
+
+.person-info span{
+    font-size:12px;
+    color:#67a47d;
+}
+
+/* ================= CHAT ================= */
+
+.chat-box{
+    height:550px;
+    display:flex;
+    flex-direction:column;
+}
+
+.messages{
+    flex:1;
+    overflow-y:auto;
+    background:#faf9fd;
+    border-radius:16px;
+    padding:18px;
+}
+
+.message{
+    max-width:70%;
+    background:#ebe5f8;
+    padding:11px 14px;
+    border-radius:15px;
+    margin-bottom:10px;
+}
+
+.message.mine{
+    margin-left:auto;
+    background:#dcefe5;
+}
+
+.message small{
+    display:block;
+    font-size:10px;
+    color:var(--muted);
+    margin-bottom:3px;
+}
+
+.chat-input{
+    display:flex;
+    gap:8px;
+    margin-top:12px;
+}
+
+.chat-input input{
+    flex:1;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:13px;
+}
+
+.chat-input button{
+    border:none;
+    padding:0 20px;
+    background:var(--purple);
+    color:white;
+    border-radius:12px;
+}
+
+/* ================= EMERGENCY ================= */
+
+.emergency-card{
+    background:#fff4f4;
+    border:1px solid #f0cacc;
+    border-radius:22px;
+    padding:28px;
+}
+
+.emergency-number{
+    color:#b54d56;
+    font-size:38px;
+    font-weight:800;
+    margin:10px 0;
+}
+
+.danger-button{
+    border:none;
+    background:#d9777f;
+    color:white;
+    padding:15px 22px;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* ================= PROFILE ================= */
+
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    background:linear-gradient(135deg,#eee8fb,#eef8f3);
+    padding:25px;
+    border-radius:22px;
+    margin-bottom:20px;
+}
+
+.big-avatar{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    background:white;
+    color:var(--purple-dark);
+    font-size:25px;
+    font-weight:bold;
+}
+
+.info-row{
+    padding:14px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.info-row:last-child{
+    border-bottom:none;
+}
+
+.info-row span{
+    display:block;
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* ================= JOURNAL ================= */
+
+.journal-box{
+    width:100%;
+    min-height:220px;
+    resize:vertical;
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:15px;
+    outline:none;
+    font-family:inherit;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:950px){
+
+    .sidebar{
+        width:210px;
+    }
+
+    .main{
+        margin-left:210px;
+    }
+
+    .game-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .sidebar{
+        position:relative;
+        width:100%;
+        height:auto;
+        border-right:none;
+        border-bottom:1px solid var(--border);
+    }
+
+    .sidebar-logo{
+        padding-bottom:12px;
+    }
+
+    .nav{
+        flex-direction:row;
+        overflow-x:auto;
+    }
+
+    .nav button{
+        white-space:nowrap;
+    }
+
+    .profile-mini{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .search{
+        display:none;
+    }
+
+    .content{
+        padding:18px;
+    }
+
+    .card-grid,
+    .game-grid{
+        grid-template-columns:1fr;
+    }
+
+    .page-title{
+        font-size:28px;
+    }
+
+}
+
+
+/* ===== Functional additions — visual language follows the original UI ===== */
+.mc-overlay{position:fixed;inset:0;background:rgba(48,43,64,.38);display:none;align-items:center;justify-content:center;padding:20px;z-index:1000}
+.mc-overlay.open{display:flex}
+.mc-modal{width:min(680px,100%);max-height:88vh;overflow:auto;background:#fff;border:1px solid var(--border);border-radius:22px;padding:24px;box-shadow:0 20px 60px rgba(48,43,64,.18);position:relative}
+.mc-close{position:absolute;right:14px;top:12px;width:36px;height:36px;border:0;border-radius:10px;background:var(--lavender);color:var(--purple-dark);font-size:24px;cursor:pointer}
+.mc-close:hover{background:#e8e1f5}
+.mc-setting{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 0;border-bottom:1px solid var(--border)}
+.mc-setting:last-of-type{border-bottom:0}
+.mc-setting strong{display:block;margin-bottom:4px}.mc-setting small{color:var(--muted);display:block;line-height:1.45}
+.mc-select{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text)}
+.mc-switch{position:relative;width:48px;height:27px;flex:0 0 auto}.mc-switch input{opacity:0;width:0;height:0}.mc-slider{position:absolute;inset:0;background:#ddd7e8;border-radius:30px;cursor:pointer}.mc-slider:before{content:"";position:absolute;width:21px;height:21px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.18s}.mc-switch input:checked+.mc-slider{background:var(--purple)}.mc-switch input:checked+.mc-slider:before{transform:translateX(21px)}
+.mc-chat-list{height:330px;overflow:auto;background:#faf9fd;border-radius:16px;padding:15px;margin-top:15px}.mc-chat-msg{max-width:75%;padding:10px 13px;border-radius:14px;background:#ebe5f8;margin-bottom:9px}.mc-chat-msg.mine{margin-left:auto;background:#dcefe5}.mc-chat-msg small{display:block;color:var(--muted);font-size:10px;margin-bottom:3px}.mc-chat-compose{display:flex;gap:8px;margin-top:10px}.mc-chat-compose input{flex:1;border:1px solid var(--border);border-radius:12px;padding:12px;outline:none}.mc-mic{border:0;border-radius:10px;background:var(--lavender);color:var(--purple-dark);padding:0 12px;cursor:pointer}
+.mc-feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}.mc-feature{border:1px solid var(--border);border-radius:16px;padding:15px;background:#faf9fd}.mc-feature p{color:var(--muted);font-size:13px;line-height:1.5;margin:7px 0}.mc-speak{border:0;border-radius:9px;background:var(--lavender);padding:7px 10px;cursor:pointer}.mc-stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}.mc-stat{background:#faf9fd;border-radius:14px;padding:15px;text-align:center;color:var(--muted);font-size:12px}.mc-stat strong{display:block;color:var(--purple-dark);font-size:25px;margin-bottom:4px}.mc-bar{height:10px;background:#ece8f2;border-radius:20px;overflow:hidden;margin-top:12px}.mc-bar span{display:block;height:100%;background:var(--purple)}.mc-toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#302b40;color:#fff;padding:10px 15px;border-radius:12px;z-index:1100;transition:.2s}.mc-toast.show{opacity:1;transform:translate(-50%,0)}
+.mc-inline-mic{border:0;background:var(--lavender);color:var(--purple-dark);border-radius:9px;padding:0 11px;cursor:pointer}.mc-input-wrap{display:flex;gap:7px}.mc-input-wrap>input,.mc-input-wrap>textarea{flex:1}
+.mc-medium-text{font-size:1.08em}.mc-large-text{font-size:1.18em}.mc-xlarge-text{font-size:1.30em}
+@media(max-width:700px){.mc-feature-grid{grid-template-columns:1fr}.mc-stat-row{grid-template-columns:1fr}.mc-modal{padding:20px}.mc-chat-compose{flex-wrap:wrap}.mc-chat-compose input{min-width:100%}}
+</style>
+</head>
+
+<body>
+
+
+<!-- ======================================================
+     LOGIN / CREATE PROFILE
+====================================================== -->
+
+<div id="loginPage">
+
+    <div class="login-box">
+
+        <div class="logo">MindCare</div>
+
+        <h1 class="login-title">
+            A calmer day starts here
+        </h1>
+
+        <p class="login-description">
+            Cognitive support, memory activities, family connection
+            and everyday care — designed with simplicity in mind.
+        </p>
+
+
+        <div class="login-tabs">
+
+            <button
+                id="createTab"
+                class="active"
+                onclick="showCreate()">
+                Create Profile
+            </button>
+
+            <button
+                id="loginTab"
+                onclick="showLogin()">
+                Log In
+            </button>
+
+        </div>
+
+
+        <!-- CREATE PROFILE -->
+
+        <form id="createForm" onsubmit="createProfile(event)">
+
+            <div class="form-group">
+                <label>Full name</label>
+
+                <input
+                    id="profileName"
+                    type="text"
+                    placeholder="Enter your name"
+                    required>
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Phone number</label>
+
+                <input
+                    id="profilePhone"
+                    type="tel"
+                    placeholder="+91 98765 43210"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Preferred language</label>
+
+                <select id="profileLanguage">
+
+                    <option>English</option>
+                    <option>Hindi</option>
+                    <option>Assamese</option>
+                    <option>Bengali</option>
+                    <option>Manipuri</option>
+
+                </select>
+
+            </div>
+
+
+            <button class="primary-button">
+                Create Profile & Continue
+            </button>
+
+        </form>
+
+
+        <!-- LOGIN -->
+
+        <form
+            id="loginForm"
+            class="hidden"
+            onsubmit="login(event)">
+
+            <div class="form-group">
+
+                <label>Phone number</label>
+
+                <input
+                    id="loginPhone"
+                    type="tel"
+                    placeholder="+91 98765 43210"
+                    required>
+
+            </div>
+<button class="primary-button">
+                Log In
+            </button>
+
+            <p class="small-note">
+                Use the same phone number you registered with.
+            </p>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- ======================================================
+     MAIN APPLICATION
+====================================================== -->
+
+<div id="app">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+        MindCare
+    </div>
+
+
+    <nav class="nav">
+
+        <button
+            class="active"
+            onclick="openPage('dashboard',this)">
+            🏠 Dashboard
+        </button>
+
+
+        <button onclick="openPage('games',this)">
+            🧩 Memory Games
+        </button>
+
+
+        <button onclick="openPage('family',this)">
+            ♡ Family Circle
+        </button>
+
+
+        <button onclick="openPage('journal',this)">
+            📖 My Journal
+        </button>
+
+
+        <button onclick="openPage('nearby',this)">
+            👥 Nearby Friends
+        </button>
+
+
+        <button onclick="openPage('companion',this)">
+            ✦ AI Companion
+        </button>
+
+
+        <button onclick="openPage('profile',this)">
+            👤 My Profile
+        </button>
+
+
+        <button
+            class="emergency"
+            onclick="openPage('emergency',this)">
+            🚨 Emergency Help
+        </button>
+
+    </nav>
+
+
+    <div class="profile-mini">
+
+        <strong id="sideName">
+            Patient
+        </strong>
+
+        <span id="sidePhone">
+            Phone number
+        </span>
+
+    </div>
+
+</aside>
+
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+
+<!-- TOP BAR -->
+
+<header class="topbar">
+
+    <input
+        class="search"
+        placeholder="Search activities, care or memories">
+
+
+    <div class="top-actions">
+
+        <button
+            class="icon-button"
+            title="Read page aloud"
+            onclick="readPage()">
+            🔊
+        </button>
+
+
+        <button
+            class="icon-button"
+            title="Stop audio"
+            onclick="stopReading()">
+            ■
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<div class="content">
+
+
+<!-- ======================================================
+     DASHBOARD
+====================================================== -->
+
+<section
+    id="dashboard"
+    class="page active">
+
+
+    <div class="hero">
+
+        <div class="eyebrow">
+            Saturday, September 12
+        </div>
+
+        <h1 class="page-title">
+            Good morning,
+            <span id="dashboardName">
+                there
+            </span>
+        </h1>
+
+        <p class="page-description">
+            Here is everything you need for a calm and healthy day.
+        </p>
+
+    </div>
+
+
+
+    <div class="card-grid">
+
+
+        <!-- TODAY'S CARE -->
+
+        <div class="card">
+
+            <h2>
+                Your care for today
+            </h2>
+
+            <p class="card-description">
+                Simple reminders to help you stay on track.
+            </p>
+
+
+            <div class="progress">
+                <div class="progress-bar"
+                     id="progressBar">
+                </div>
+            </div>
+
+            <p
+                class="card-description"
+                id="progressText">
+                2 of 4 completed
+            </p>
+
+
+            <div class="care-list">
+
+
+                <label class="care-item">
+
+                    <input
+                        type="checkbox"
+                        checked
+                        onchange="updateProgress()">
+
+                    <div class="care-info">
+
+                        <strong>
+                            Morning medication
+                        </strong>
+
+                        <span>
+                            Take after breakfast
+                        </span>
+
+                    </div>
+
+                    <span class="time">
+                        8:00 AM
+                    </span>
+
+                    <button
+                        type="button"
+                        class="small-button"
+                        onclick="speak('Morning medication. Take after breakfast.')">
+                        🔊
+                    </button>
+
+                </label>
+
+
+
+                <label class="care-item">
+
+                    <input
+                        type="checkbox"
+                        checked
+                        onchange="updateProgress()">
+
+                    <div class="care-info">
+
+                        <strong>
+                            Drink water
+                        </strong>
+
+                        <span>
+                            Have your morning glass
+                        </span>
+
+                    </div>
+
+                    <span class="time">
+                        9:00 AM
+                    </span>
+
+                    <button
+                        type="button"
+                        class="small-button"
+                        onclick="speak('Drink water. Have your morning glass.')">
+                        🔊
+                    </button>
+
+                </label>
+
+
+
+                <label class="care-item">
+
+                    <input
+                        type="checkbox"
+                        onchange="updateProgress()">
+
+                    <div class="care-info">
+
+                        <strong>
+                            Memory activity
+                        </strong>
+
+                        <span>
+                            Try a 10-minute brain exercise
+                        </span>
+
+                    </div>
+
+                    <span class="time">
+                        10:00 AM
+                    </span>
+
+                    <button
+                        type="button"
+                        class="small-button"
+                        onclick="speak('Memory activity. Try a 10-minute brain exercise.')">
+                        🔊
+                    </button>
+
+                </label>
+
+
+
+                <label class="care-item">
+
+                    <input
+                        type="checkbox"
+                        onchange="updateProgress()">
+
+                    <div class="care-info">
+
+                        <strong>
+                            Evening walk
+                        </strong>
+
+                        <span>
+                            A gentle 15-minute walk
+                        </span>
+
+                    </div>
+
+                    <span class="time">
+                        5:30 PM
+                    </span>
+
+                    <button
+                        type="button"
+                        class="small-button"
+                        onclick="speak('Evening walk. A gentle 15-minute walk.')">
+                        🔊
+                    </button>
+
+                </label>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CAREGIVER -->
+
+        <div class="card">
+
+            <h2>
+                Your caregiver
+            </h2>
+
+            <p class="card-description">
+                Someone you can contact whenever you need help.
+            </p>
+
+
+            <div style="margin-top:25px">
+
+                <div class="avatar">
+                    RS
+                </div>
+
+                <br>
+
+                <h3>
+                    Raj Sharma
+                </h3>
+
+                <p class="card-description">
+                    Available now
+                </p>
+
+            </div>
+
+
+            <div class="button-row">
+
+                <button
+                    class="small-button green-button"
+                    onclick="alert('Calling Raj Sharma...')">
+                    📞 Contact Raj
+                </button>
+
+
+                <button
+                    class="small-button"
+                    onclick="openPage('emergency')">
+                    Emergency Help
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <h2 class="section-title">
+        Quick activities
+    </h2>
+
+
+    <div class="card-grid">
+
+
+        <div class="card">
+
+            <h2>
+                🧠 Memory Exercise
+            </h2>
+
+            <p class="card-description">
+                Take a few minutes for a gentle cognitive activity.
+            </p>
+
+            <div class="button-row">
+
+                <button
+                    class="small-button"
+                    onclick="openPage('games')">
+                    Start activity
+                </button>
+
+                <button
+                    class="small-button"
+                    onclick="speak('It is time for your memory exercise. Take your time and enjoy the activity.')">
+                    🔊 Hear instructions
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                👥 Family Circle
+            </h2>
+
+            <p class="card-description">
+                Stay connected with people who care about you.
+            </p>
+
+            <button
+                class="small-button"
+                style="margin-top:15px"
+                onclick="openPage('family')">
+                Open Family Circle
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     GAMES
+====================================================== -->
+
+<section
+    id="games"
+    class="page">
+
+    <div class="eyebrow">
+        Cognitive activities
+    </div>
+
+    <h1 class="page-title">
+        Memory Games
+    </h1>
+
+    <p class="page-description">
+        Gentle games designed to keep the mind active and engaged.
+    </p>
+
+
+    <div class="game-grid">
+
+
+        <div class="game-card">
+
+            <div class="game-icon">
+                🧩
+            </div>
+
+            <h3>
+                Picture Pairs
+            </h3>
+
+            <p>
+                Find matching pairs and exercise your memory.
+            </p>
+
+            <button onclick="startMemoryGame()">
+                Play Game
+            </button>
+
+        </div>
+
+
+
+        <div class="game-card">
+
+            <div class="game-icon">
+                🔢
+            </div>
+
+            <h3>
+                Easy Sudoku
+            </h3>
+
+            <p>
+                A simple number puzzle for logical thinking.
+            </p>
+
+            <button onclick="startSudoku()">
+                Play Game
+            </button>
+
+        </div>
+
+
+
+        <div class="game-card">
+
+            <div class="game-icon">
+                🟪
+            </div>
+
+            <h3>
+                Block Lines
+            </h3>
+
+            <p>
+                Place blocks and complete lines to make them disappear.
+            </p>
+
+            <button onclick="startBlocks()">
+                Play Game
+            </button>
+
+        </div>
+
+
+
+        <div class="game-card">
+
+            <div class="game-icon">
+                🧠
+            </div>
+
+            <h3>
+                Remember the Sequence
+            </h3>
+
+            <p>
+                Watch the pattern and repeat it from memory.
+            </p>
+
+            <button onclick="startSequence()">
+                Play Game
+            </button>
+
+        </div>
+
+
+
+        <div class="game-card">
+
+            <div class="game-icon">
+                🔤
+            </div>
+
+            <h3>
+                Word Match
+            </h3>
+
+            <p>
+                Match simple words with their related meaning.
+            </p>
+
+            <button onclick="startWordGame()">
+                Play Game
+            </button>
+
+        </div>
+
+
+
+        <div class="game-card">
+
+            <div class="game-icon">
+                🎵
+            </div>
+
+            <h3>
+                Music Memory
+            </h3>
+
+            <p>
+                Listen to familiar sounds and remember their order.
+            </p>
+
+            <button onclick="speak('Music Memory helps you remember sounds and sequences. This activity can be connected to familiar songs in the full application.')">
+                Hear About It
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="gameArea"
+        class="game-area">
+
+        <h3>
+            Choose a game above
+        </h3>
+
+        <p class="card-description">
+            Your selected activity will appear here.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     FAMILY
+====================================================== -->
+
+<section
+    id="family"
+    class="page">
+
+    <div class="eyebrow">
+        Stay connected
+    </div>
+
+    <h1 class="page-title">
+        Family Circle
+    </h1>
+
+    <p class="page-description">
+        Keep in touch with the people who care about you.
+    </p>
+
+
+    <div class="card">
+
+        <h2>
+            Your family
+        </h2>
+
+        <div class="people">
+
+
+            <div class="person">
+
+                <div class="avatar">
+                    RS
+                </div>
+
+                <div class="person-info">
+
+                    <strong>
+                        Raj Sharma
+                    </strong>
+
+                    <span>
+                        ● Available now
+                    </span>
+
+                </div>
+
+                <button
+                    class="small-button"
+                    onclick="openChat('Raj')">
+                    Message
+                </button>
+
+            </div>
+
+
+
+            <div class="person">
+
+                <div class="avatar">
+                    PS
+                </div>
+
+                <div class="person-info">
+
+                    <strong>
+                        Priya Sharma
+                    </strong>
+
+                    <span>
+                        ● Available now
+                    </span>
+
+                </div>
+
+                <button
+                    class="small-button"
+                    onclick="openChat('Priya')">
+                    Message
+                </button>
+
+            </div>
+
+
+
+            <div class="person">
+
+                <div class="avatar">
+                    DM
+                </div>
+
+                <div class="person-info">
+
+                    <strong>
+                        Dr. Mehta
+                    </strong>
+
+                    <span style="color:#777">
+                        Caregiver
+                    </span>
+
+                </div>
+
+                <button
+                    class="small-button"
+                    onclick="openChat('Dr. Mehta')">
+                    Message
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <div class="card" style="margin-top:18px">
+
+        <h2>
+            Family messages
+        </h2>
+
+        <div class="messages" style="height:250px;margin-top:15px">
+
+            <div class="message">
+
+                <small>
+                    Priya
+                </small>
+
+                Good morning! How are you feeling today?
+
+            </div>
+
+
+            <div class="message">
+
+                <small>
+                    Raj
+                </small>
+
+                Don't forget your evening walk!
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     JOURNAL
+====================================================== -->
+
+<section
+    id="journal"
+    class="page">
+
+    <div class="eyebrow">
+        Your memories
+    </div>
+
+    <h1 class="page-title">
+        My Journal
+    </h1>
+
+    <p class="page-description">
+        Write about your day, memories, family or anything you want to remember.
+    </p>
+
+
+    <div class="card">
+
+        <h2>
+            Today's note
+        </h2>
+
+        <textarea
+            id="journalText"
+            class="journal-box"
+            placeholder="Write something about your day..."></textarea>
+
+
+        <div class="button-row">
+
+            <button
+                class="small-button"
+                onclick="saveJournal()">
+                Save Note
+            </button>
+
+            <button
+                class="small-button"
+                onclick="speak(document.getElementById('journalText').value)">
+                🔊 Hear My Note
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     NEARBY FRIENDS
+====================================================== -->
+
+<section
+    id="nearby"
+    class="page">
+
+    <div class="eyebrow">
+        Community
+    </div>
+
+    <h1 class="page-title">
+        Nearby Friends
+    </h1>
+
+    <p class="page-description">
+        Connect with nearby people using the MindCare community.
+    </p>
+
+
+    <div class="card">
+
+        <h2>
+            People nearby
+        </h2>
+
+        <p class="card-description">
+            Only people who choose to participate in the community are shown.
+        </p>
+
+
+        <div class="people">
+
+
+            <div class="person">
+
+                <div class="avatar">
+                    AM
+                </div>
+
+                <div class="person-info">
+
+                    <strong>
+                        Anil
+                    </strong>
+
+                    <span>
+                        ● Nearby
+                    </span>
+
+                </div>
+
+                <button
+                    class="small-button"
+                    onclick="joinCommunity('Anil')">
+                    Connect
+                </button>
+
+            </div>
+
+
+
+            <div class="person">
+
+                <div class="avatar">
+                    SK
+                </div>
+
+                <div class="person-info">
+
+                    <strong>
+                        Sunita
+                    </strong>
+
+                    <span>
+                        ● Nearby
+                    </span>
+
+                </div>
+
+                <button
+                    class="small-button"
+                    onclick="joinCommunity('Sunita')">
+                    Connect
+                </button>
+
+            </div>
+
+
+
+            <div class="person">
+
+                <div class="avatar">
+                    RP
+                </div>
+
+                <div class="person-info">
+
+                    <strong>
+                        Ramesh
+                    </strong>
+
+                    <span>
+                        ● Nearby
+                    </span>
+
+                </div>
+
+                <button
+                    class="small-button"
+                    onclick="joinCommunity('Ramesh')">
+                    Connect
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                class="small-button green-button"
+                onclick="startBluetooth()">
+                📡 Find Nearby Devices
+            </button>
+
+            <button
+                class="small-button"
+                onclick="openPage('nearbyChat')">
+                💬 Open Group Chat
+            </button>
+
+        </div>
+
+
+        <p class="small-note">
+
+            Nearby Bluetooth discovery requires browser/device permission.
+            In the full mobile application this can connect to the real
+            nearby-community system.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     NEARBY GROUP CHAT
+====================================================== -->
+
+<section
+    id="nearbyChat"
+    class="page">
+
+    <div class="eyebrow">
+        Community chat
+    </div>
+
+    <h1 class="page-title">
+        Nearby Friends Group
+    </h1>
+
+    <p class="page-description">
+        A friendly space for people using MindCare nearby.
+    </p>
+
+
+    <div class="card chat-box">
+
+        <div
+            id="nearbyMessages"
+            class="messages">
+
+            <div class="message">
+
+                <small>
+                    Sunita
+                </small>
+
+                Good morning everyone 😊
+
+            </div>
+
+
+            <div class="message">
+
+                <small>
+                    Anil
+                </small>
+
+                Has anyone tried today's memory game?
+
+            </div>
+
+
+            <div class="message">
+
+                <small>
+                    Priya
+                </small>
+
+                Yes! I liked the picture game.
+
+            </div>
+
+        </div>
+
+
+        <div class="chat-input">
+
+            <input
+                id="nearbyInput"
+                placeholder="Write a message..."
+                onkeydown="if(event.key==='Enter') sendNearbyMessage()">
+
+            <button
+                onclick="sendNearbyMessage()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     AI COMPANION
+====================================================== -->
+
+<section
+    id="companion"
+    class="page">
+
+    <div class="eyebrow">
+        Friendly support
+    </div>
+
+    <h1 class="page-title">
+        AI Companion
+    </h1>
+
+    <p class="page-description">
+        A simple conversational companion for everyday support.
+    </p>
+
+
+    <div class="card chat-box">
+
+        <div
+            id="aiMessages"
+            class="messages">
+
+            <div class="message">
+
+                <small>
+                    MindCare Companion
+                </small>
+
+                Hello! I'm here with you. How are you feeling today?
+
+            </div>
+
+        </div>
+
+
+        <div class="chat-input">
+
+            <input
+                id="aiInput"
+                placeholder="Type something..."
+                onkeydown="if(event.key==='Enter')sendAI()">
+
+            <button onclick="sendAI()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     PROFILE
+====================================================== -->
+
+<section
+    id="profile"
+    class="page">
+
+    <div class="eyebrow">
+        Your account
+    </div>
+
+    <h1 class="page-title">
+        My Profile
+    </h1>
+
+    <p class="page-description">
+        Your basic MindCare profile information.
+    </p>
+
+
+    <div class="profile-header">
+
+        <div
+            class="big-avatar"
+            id="bigAvatar">
+            U
+        </div>
+
+        <div>
+
+            <h2 id="profileDisplayName">
+                User
+            </h2>
+
+            <p class="card-description">
+                MindCare member
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="info-row">
+
+            <strong>
+                Full Name
+            </strong>
+
+            <span id="displayName">
+                —
+            </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <strong>
+                Phone Number
+            </strong>
+
+            <span id="displayPhone">
+                —
+            </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <strong>
+                Preferred Language
+            </strong>
+
+            <span id="displayLanguage">
+                —
+            </span>
+
+        </div>
+
+
+        <button
+            class="small-button"
+            style="margin-top:18px"
+            onclick="logout()">
+            Log Out
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- ======================================================
+     EMERGENCY
+====================================================== -->
+
+<section
+    id="emergency"
+    class="page">
+
+    <div class="eyebrow">
+        Immediate assistance
+    </div>
+
+    <h1 class="page-title">
+        Emergency Help
+    </h1>
+
+    <p class="page-description">
+        If you are in immediate danger or need urgent assistance,
+        contact emergency services or your caregiver.
+    </p>
+
+
+    <div class="emergency-card">
+
+        <h2>
+            Emergency services
+        </h2>
+
+        <div class="emergency-number">
+            112
+        </div>
+
+        <p>
+            India's emergency response number.
+        </p>
+
+
+        <div class="button-row">
+
+            <button
+                class="danger-button"
+                onclick="callEmergency()">
+                🚨 Call 112
+            </button>
+
+            <button
+                class="small-button"
+                onclick="alert('Calling Raj Sharma...')">
+                📞 Contact Caregiver
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="card" style="margin-top:18px">
+
+        <h2>
+            Your emergency contact
+        </h2>
+
+        <p class="card-description">
+            Raj Sharma — Primary Caregiver
+        </p>
+
+        <div class="button-row">
+
+            <button
+                class="small-button green-button"
+                onclick="alert('Calling Raj Sharma...')">
+                Call Raj
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+<footer>
+    MindCare — AI-Based Cognitive Gaming and Memory Assistance Platform
+</footer>
+
+
+</main>
+
+</div>
+
+
+
+
+<script>
+/* ============================================================
+   MindCare — functional layer rebuilt on the ORIGINAL interface
+   ============================================================ */
+(function(){
+  'use strict';
+  const SETTINGS_KEY='mindcareSettings';
+  const USERS_KEY='mindcareUsers';
+  const STATS_KEY='mindcareStats';
+  const CHAT_KEY='mindcareFamilyChats';
+  const defaults={notifySound:true,voiceSound:true,taskReminder:true,autoRead:false,textSize:'normal',reduceMotion:false};
+  let settings={...defaults};
+  let stats={games:0,wins:0,best:0,byGame:{}};
+  let familyChats={};
+  let currentChat='';
+  let audioCtx=null;
+  let recognition=null;
+
+  function readJSON(k,f){try{return JSON.parse(localStorage.getItem(k)) ?? f}catch(e){return f}}
+  settings={...defaults,...readJSON(SETTINGS_KEY,{})};
+  stats={...stats,...readJSON(STATS_KEY,{})};
+  stats.byGame=stats.byGame||{};
+  familyChats=readJSON(CHAT_KEY,{});
+  const save=()=>{localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));localStorage.setItem(STATS_KEY,JSON.stringify(stats));localStorage.setItem(CHAT_KEY,JSON.stringify(familyChats))};
+  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const toast=t=>{let e=document.getElementById('mcToast');if(!e){e=document.createElement('div');e.id='mcToast';e.className='mc-toast';document.body.appendChild(e)}e.textContent=t;e.classList.add('show');clearTimeout(window.__mcToastTimer);window.__mcToastTimer=setTimeout(()=>e.classList.remove('show'),2200)};
+  function profile(){return readJSON('mindcareProfile',{} )||{}}
+  function normalizePhone(p){return String(p||'').replace(/\D/g,'')}
+
+  window.showCreate=function(){document.getElementById('createForm').classList.remove('hidden');document.getElementById('loginForm').classList.add('hidden');document.getElementById('createTab').classList.add('active');document.getElementById('loginTab').classList.remove('active')};
+  window.showLogin=function(){document.getElementById('createForm').classList.add('hidden');document.getElementById('loginForm').classList.remove('hidden');document.getElementById('createTab').classList.remove('active');document.getElementById('loginTab').classList.add('active')};
+
+  /* ---------- original navigation ---------- */
+  window.openPage=function(pageId,button){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    const page=document.getElementById(pageId); if(page) page.classList.add('active');
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+    if(button) button.classList.add('active');
+    if(pageId==='dashboard') updateDashboard();
+    if(pageId==='profile') loadProfile();
+  };
+
+  /* ---------- login/signup ---------- */
+  window.createProfile=function(event){
+    event.preventDefault();
+    const name=document.getElementById('profileName').value.trim();
+    const phone=normalizePhone(document.getElementById('profilePhone').value);
+    const language=document.getElementById('profileLanguage').value;
+    if(!name||phone.length<7){toast('Please enter a valid name and phone number');return false}
+    const users=readJSON(USERS_KEY,{});
+    if(users[phone]){toast('This phone number is already registered. Please use Log In.');showLogin();return false}
+    const p={name,phone,language}; users[phone]=p;
+    localStorage.setItem(USERS_KEY,JSON.stringify(users));localStorage.setItem('mindcareProfile',JSON.stringify(p));
+    showApp();toast('Profile created successfully');return false;
+  };
+  window.login=function(event){
+    event.preventDefault();
+    const phone=normalizePhone(document.getElementById('loginPhone').value);
+    const users=readJSON(USERS_KEY,{}); let p=users[phone];
+    const old=readJSON('mindcareProfile',null); if(!p&&old&&normalizePhone(old.phone)===phone)p=old;
+    if(!p){toast('No account found. Please create a profile first.');return false}
+    localStorage.setItem('mindcareProfile',JSON.stringify(p));showApp();toast('Welcome back, '+p.name);return false;
+  };
+  function showApp(){document.getElementById('loginPage').style.display='none';document.getElementById('app').style.display='block';loadProfile();loadJournal();updateProgress();updateDashboard()}
+  window.logout=function(){localStorage.removeItem('mindcareProfile');document.getElementById('app').style.display='none';document.getElementById('loginPage').style.display='flex';showLogin();toast('Logged out')};
+
+  /* ---------- profile ---------- */
+  window.loadProfile=function(){const p=profile();const name=p.name||'User';const phone=p.phone||'—';const lang=p.language||'—';
+    ['profileDisplayName','displayName'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=name});
+    const ph=document.getElementById('displayPhone');if(ph)ph.textContent=phone;
+    const la=document.getElementById('displayLanguage');if(la)la.textContent=lang;
+    const av=document.getElementById('bigAvatar');if(av)av.textContent=name.charAt(0).toUpperCase();
+    const mn=document.querySelector('.profile-mini strong');if(mn)mn.textContent=name;
+    const ms=document.querySelector('.profile-mini span');if(ms)ms.textContent=phone;
+  };
+
+  /* ---------- voice / mic ---------- */
+  window.speak=function(text){text=String(text||'').trim();if(!text){toast('There is no text to read');return}if(!('speechSynthesis' in window)){toast('Text-to-speech is not supported in this browser');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.rate=.88;u.volume=1;speechSynthesis.speak(u)};
+  window.stopReading=function(){if('speechSynthesis' in window)speechSynthesis.cancel()};
+  window.readPage=function(){const active=document.querySelector('.page.active');if(active)speak(active.innerText)};
+  window.startMic=function(inputId){const input=document.getElementById(inputId);if(!input){toast('Input not found');return}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('Voice input is not supported in this browser');return}if(recognition){try{recognition.stop()}catch(e){}}
+    recognition=new SR();recognition.lang=(profile().language==='Hindi'?'hi-IN':'en-IN');recognition.interimResults=false;recognition.maxAlternatives=1;recognition.onresult=e=>{input.value=(input.value+' '+e.results[0][0].transcript).trim();input.dispatchEvent(new Event('input',{bubbles:true}));toast('Voice added')};recognition.onerror=()=>toast('Microphone input could not be started');recognition.onend=()=>{recognition=null};recognition.start();toast('Listening…')
+  };
+  function addMic(input){if(!input||input.dataset.mcMic)return; if(!['text','tel','search'].includes(input.type)&&input.tagName!=='TEXTAREA')return; input.dataset.mcMic='1';const wrap=document.createElement('div');wrap.className='mc-input-wrap';input.parentNode.insertBefore(wrap,input);wrap.appendChild(input);const b=document.createElement('button');b.type='button';b.className='mc-inline-mic';b.textContent='🎙️';b.title='Speak';b.onclick=()=>startMic(input.id);if(!input.id)input.id='mcInput'+Math.random().toString(36).slice(2);wrap.appendChild(b)}
+  function addMics(){['profileName','profilePhone','loginPhone','journalText','nearbyInput','aiInput'].forEach(id=>addMic(document.getElementById(id)))}
+
+  /* ---------- settings ---------- */
+  function applySettings(){document.documentElement.classList.remove('mc-medium-text','mc-large-text','mc-xlarge-text');if(settings.textSize==='medium')document.documentElement.classList.add('mc-medium-text');if(settings.textSize==='large')document.documentElement.classList.add('mc-large-text');if(settings.textSize==='xlarge')document.documentElement.classList.add('mc-xlarge-text');document.documentElement.style.scrollBehavior=settings.reduceMotion?'auto':'smooth'}
+  function settingsModal(){if(document.getElementById('mcSettings'))return;const o=document.createElement('div');o.id='mcSettings';o.className='mc-overlay';o.innerHTML=`<div class="mc-modal"><button class="mc-close" type="button" aria-label="Close">×</button><h2>Settings</h2><p class="card-description">Make MindCare easier and more comfortable to use.</p>
+    <div class="mc-setting"><div><strong>Notification sound</strong><small>Play a gentle sound for reminders.</small></div><label class="mc-switch"><input id="mcNotify" type="checkbox"><span class="mc-slider"></span></label></div>
+    <div class="mc-setting"><div><strong>Voice / chat sound</strong><small>Allow spoken responses and message reading.</small></div><label class="mc-switch"><input id="mcVoice" type="checkbox"><span class="mc-slider"></span></label></div>
+    <div class="mc-setting"><div><strong>Pending-task reminders</strong><small>Keep reminders enabled for unfinished care tasks.</small></div><label class="mc-switch"><input id="mcReminder" type="checkbox"><span class="mc-slider"></span></label></div>
+    <div class="mc-setting"><div><strong>Auto-read new chat messages</strong><small>Read new AI/family/community replies automatically.</small></div><label class="mc-switch"><input id="mcAutoRead" type="checkbox"><span class="mc-slider"></span></label></div>
+    <div class="mc-setting"><div><strong>Text size</strong><small>Normal, medium, large or extra large.</small></div><select id="mcTextSize" class="mc-select"><option value="normal">Normal</option><option value="medium">Medium</option><option value="large">Large</option><option value="xlarge">Extra large</option></select></div>
+    <div class="mc-setting"><div><strong>Reduce motion</strong><small>Turn off smooth scrolling.</small></div><label class="mc-switch"><input id="mcMotion" type="checkbox"><span class="mc-slider"></span></label></div>
+    <div class="button-row"><button class="small-button" type="button" id="mcTestSound">Test notification sound</button><button class="small-button" type="button" id="mcTestVoice">Test voice</button></div></div>`;
+    document.body.appendChild(o);const close=()=>o.classList.remove('open');o.querySelector('.mc-close').onclick=close;o.addEventListener('click',e=>{if(e.target===o)close()});
+    const sync=()=>{settings.notifySound=o.querySelector('#mcNotify').checked;settings.voiceSound=o.querySelector('#mcVoice').checked;settings.taskReminder=o.querySelector('#mcReminder').checked;settings.autoRead=o.querySelector('#mcAutoRead').checked;settings.textSize=o.querySelector('#mcTextSize').value;settings.reduceMotion=o.querySelector('#mcMotion').checked;applySettings();save();toast('Settings saved')};
+    ['mcNotify','mcVoice','mcReminder','mcAutoRead','mcTextSize','mcMotion'].forEach(id=>o.querySelector('#'+id).addEventListener('change',sync));
+    o.querySelector('#mcTestSound').onclick=()=>{tone();toast('Notification sound tested')};o.querySelector('#mcTestVoice').onclick=()=>speak('MindCare voice is working.');
+  }
+  function openSettings(){settingsModal();const o=document.getElementById('mcSettings');o.querySelector('#mcNotify').checked=!!settings.notifySound;o.querySelector('#mcVoice').checked=!!settings.voiceSound;o.querySelector('#mcReminder').checked=!!settings.taskReminder;o.querySelector('#mcAutoRead').checked=!!settings.autoRead;o.querySelector('#mcTextSize').value=settings.textSize;o.querySelector('#mcMotion').checked=!!settings.reduceMotion;o.classList.add('open')}
+  window.openSettings=openSettings;
+  function tone(){if(!settings.notifySound)return;try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!audioCtx)audioCtx=new A();const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.frequency.value=660;g.gain.value=.045;o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+.14)}catch(e){}}
+
+  /* ---------- family chat ---------- */
+  window.openChat=function(name){currentChat=name;const o=document.getElementById('mcFamilyChat')||createFamilyModal();o.querySelector('#mcFamilyTitle').textContent='Chat with '+name;renderFamily();o.classList.add('open');setTimeout(()=>o.querySelector('#mcFamilyInput').focus(),50)};
+  function createFamilyModal(){const o=document.createElement('div');o.id='mcFamilyChat';o.className='mc-overlay';o.innerHTML=`<div class="mc-modal"><button class="mc-close" type="button" aria-label="Close">×</button><h2 id="mcFamilyTitle">Private conversation</h2><p class="card-description">Family and caregiver messages stay on this demo device.</p><div id="mcFamilyMessages" class="mc-chat-list"></div><div class="mc-chat-compose"><input id="mcFamilyInput" placeholder="Write a message..."><button class="mc-mic" type="button">🎙️</button><button class="small-button" type="button">Send</button></div></div>`;document.body.appendChild(o);o.querySelector('.mc-close').onclick=()=>o.classList.remove('open');o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')});o.querySelector('.mc-mic').onclick=()=>startMic('mcFamilyInput');o.querySelector('.small-button').onclick=sendFamilyMessage;o.querySelector('#mcFamilyInput').onkeydown=e=>{if(e.key==='Enter')sendFamilyMessage()};return o}
+  function renderFamily(){const box=document.getElementById('mcFamilyMessages');if(!box)return;const arr=familyChats[currentChat]||[{from:currentChat,text:'Hello! How are you today?'}];box.innerHTML=arr.map(m=>`<div class="mc-chat-msg ${m.mine?'mine':''}"><small>${esc(m.from)}</small>${esc(m.text)} <button class="mc-speak" type="button" onclick="speak(${JSON.stringify(m.text)})">🔊</button></div>`).join('');box.scrollTop=box.scrollHeight}
+  window.sendFamilyMessage=function(){const input=document.getElementById('mcFamilyInput');if(!input||!currentChat)return;const text=input.value.trim();if(!text)return;(familyChats[currentChat]||(familyChats[currentChat]=[])).push({from:profile().name||'You',text,mine:true});input.value='';save();renderFamily();tone()};
+
+  /* ---------- skincare ---------- */
+  function openSkincare(){let o=document.getElementById('mcSkin');if(!o){o=document.createElement('div');o.id='mcSkin';o.className='mc-overlay';o.innerHTML=`<div class="mc-modal"><button class="mc-close" type="button">×</button><h2>🌸 Elder Women Skincare & Self-Care</h2><p class="card-description">Simple, gentle and low-cost ideas. Stop any product that causes irritation.</p><div class="mc-feature-grid"><div class="mc-feature"><h3>☀️ Morning care</h3><p>Gentle cleanse, moisturise and use broad-spectrum sunscreen outdoors.</p><button class="mc-speak" type="button">🔊 Listen</button></div><div class="mc-feature"><h3>🌙 Evening care</h3><p>Cleanse gently, moisturise and avoid harsh scrubs or very hot water.</p><button class="mc-speak" type="button">🔊 Listen</button></div><div class="mc-feature"><h3>💧 Dry skin</h3><p>Choose fragrance-free moisturiser and apply it soon after bathing.</p><button class="mc-speak" type="button">🔊 Listen</button></div><div class="mc-feature"><h3>🧘 Self-care</h3><p>Hydrate, rest, take a comfortable walk and make time for a calming activity.</p><button class="mc-speak" type="button">🔊 Listen</button></div></div></div>`;document.body.appendChild(o);o.querySelector('.mc-close').onclick=()=>o.classList.remove('open');o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')});o.querySelectorAll('.mc-speak').forEach((b,i)=>b.onclick=()=>speak(o.querySelectorAll('.mc-feature p')[i].textContent))}o.classList.add('open')}
+  window.openSkincare=openSkincare;
+
+  /* ---------- analytics ---------- */
+  function updateAnalytics(){let o=document.getElementById('mcAnalytics');if(!o){o=document.createElement('div');o.id='mcAnalytics';o.className='mc-overlay';o.innerHTML='<div class="mc-modal"><button class="mc-close" type="button">×</button><h2>📊 My Analytics</h2><p class="card-description">Your MindCare activity on this device.</p><div id="mcAnalyticsBody"></div></div>';document.body.appendChild(o);o.querySelector('.mc-close').onclick=()=>o.classList.remove('open');o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')})}const total=Math.max(stats.games,0),wins=Math.max(stats.wins,0),best=Math.max(stats.best,0),pct=total?Math.round(wins/total*100):0;o.querySelector('#mcAnalyticsBody').innerHTML=`<div class="mc-stat-row"><div class="mc-stat"><strong>${total}</strong>Games played</div><div class="mc-stat"><strong>${wins}</strong>Completed</div><div class="mc-stat"><strong>${best}</strong>Best score</div></div><div class="card" style="margin-top:15px"><strong>Completion rate</strong><div class="mc-bar"><span style="width:${pct}%"></span></div><p class="card-description" style="margin-top:8px">${pct}% of started games completed.</p></div>`;o.classList.add('open')}
+  window.openAnalytics=updateAnalytics;
+
+  /* ---------- game stats ---------- */
+  function gameStarted(){stats.games++;save();updateDashboard()}
+  function gameWon(type,score){stats.wins++;stats.best=Math.max(stats.best,score||0);stats.byGame[type]=(stats.byGame[type]||0)+1;save();updateDashboard();updateProgress()}
+  function nextButtons(type){return `<div class="button-row"><button class="small-button" onclick="${type}()">Play Again</button><button class="small-button" onclick="openPage('games')">Choose Another Game</button></div>`}
+
+  /* ---------- working games ---------- */
+  window.startMemoryGame=function(){const a=document.getElementById('gameArea');gameStarted();const symbols=['🌸','🌸','⭐','⭐','🍎','🍎','🌿','🌿'].sort(()=>Math.random()-.5);let first=null,lock=false,found=0;a.innerHTML='<h3>Picture Pairs</h3><p class="card-description">Find all four matching pairs.</p><div id="memoryStatus" class="card-description">0 of 4 pairs found</div><div class="memory-board" id="memoryBoard"></div>';const b=document.getElementById('memoryBoard');symbols.forEach((s,i)=>{const c=document.createElement('button');c.type='button';c.textContent='?';c.dataset.symbol=s;c.dataset.index=i;c.onclick=()=>{if(lock||c.classList.contains('revealed'))return;c.textContent=s;c.classList.add('revealed');if(!first){first=c;return}if(first.dataset.symbol===c.dataset.symbol){found++;first=null;document.getElementById('memoryStatus').textContent=found+' of 4 pairs found';if(found===4){gameWon('memory',4);a.insertAdjacentHTML('beforeend','<p class="card-description">Great job! 🎉</p>'+nextButtons('startMemoryGame'));tone()}}else{lock=true;const f=first;setTimeout(()=>{f.textContent='?';c.textContent='?';f.classList.remove('revealed');c.classList.remove('revealed');first=null;lock=false},700)}};b.appendChild(c)})};
+  window.startSudoku=function(){const a=document.getElementById('gameArea');gameStarted();const sol=[1,2,3,4,3,4,1,2,2,1,4,3,4,3,2,1],given=[1,2,null,4,null,4,1,null,2,null,4,null,4,null,2,1];a.innerHTML='<h3>Easy Sudoku</h3><p class="card-description">Fill every empty space with the correct number from 1–4.</p><div class="sudoku" id="sudokuBoard"></div><div class="button-row"><button class="small-button" onclick="checkSudoku()">Check Answer</button><button class="small-button" onclick="startSudoku()">Reset</button></div><div id="sudokuStatus" class="card-description"></div>';const b=document.getElementById('sudokuBoard');given.forEach((v,i)=>{const x=document.createElement('input');x.dataset.answer=sol[i];x.inputMode='numeric';x.maxLength=1;if(v){x.value=v;x.disabled=true}b.appendChild(x)})};
+  window.checkSudoku=function(){const xs=[...document.querySelectorAll('#sudokuBoard input')],s=document.getElementById('sudokuStatus');if(!xs.length)return;if(xs.some(x=>!x.value)){s.textContent='Please fill every empty square first.';return}const ok=xs.every(x=>Number(x.value)===Number(x.dataset.answer));if(ok){s.textContent='Perfect! Puzzle completed. 🎉';gameWon('sudoku',10);document.getElementById('gameArea').insertAdjacentHTML('beforeend',nextButtons('startSudoku'));tone()}else{s.textContent='Not quite. Check the numbers and try again.'}};
+  window.startBlocks=function(){const a=document.getElementById('gameArea');gameStarted();a.innerHTML='<h3>Block Lines</h3><p class="card-description">Complete two full rows.</p><div id="blockBoard" class="block-board"></div><div id="blockStatus" class="card-description">0 lines cleared</div>';const b=document.getElementById('blockBoard');let cleared=0;for(let i=0;i<64;i++){const x=document.createElement('button');x.type='button';x.onclick=()=>{if(cleared>=2)return;x.classList.toggle('filled');for(let r=0;r<8;r++){const row=[...b.children].slice(r*8,r*8+8);if(row.length===8&&row.every(q=>q.classList.contains('filled'))){row.forEach(q=>q.classList.remove('filled'));cleared++;document.getElementById('blockStatus').textContent=cleared+' lines cleared';if(cleared===2){gameWon('blocks',2);a.insertAdjacentHTML('beforeend',nextButtons('startBlocks'));tone();return}}}};b.appendChild(x)}};
+  window.startSequence=function(){const a=document.getElementById('gameArea');gameStarted();let seq=[],step=0,round=0,showing=false;const labels=['1','2','3','4'];a.innerHTML='<h3>Remember the Sequence</h3><p class="card-description">Watch the sequence, then tap the buttons in the same order. Complete 3 rounds.</p><div id="seqButtons" class="button-row"></div><button id="seqStart" class="small-button" style="margin-top:15px">Show Sequence</button><div id="seqStatus" class="card-description"></div>';const box=document.getElementById('seqButtons');labels.forEach((n,i)=>{const b=document.createElement('button');b.type='button';b.className='small-button';b.textContent=n;b.onclick=()=>{if(showing||!seq.length)return;if(i!==seq[step]){document.getElementById('seqStatus').textContent='Not quite. Watch the sequence again.';return}step++;if(step===seq.length){round++;if(round>=3){gameWon('sequence',round);a.insertAdjacentHTML('beforeend','<p class="card-description">Excellent memory! 🎉</p>'+nextButtons('startSequence'));tone()}else{setTimeout(newRound,500)}}};box.appendChild(b)});function newRound(){seq.push(Math.floor(Math.random()*4));step=0;showing=true;document.getElementById('seqStatus').textContent='Watch…';let k=0;const bs=[...box.children];const timer=setInterval(()=>{if(k>=seq.length){clearInterval(timer);showing=false;document.getElementById('seqStatus').textContent='Your turn!';return}const q=bs[seq[k++]];q.style.opacity='.35';setTimeout(()=>q.style.opacity='1',280)},500)}document.getElementById('seqStart').onclick=newRound};
+  window.startWordGame=function(){const a=document.getElementById('gameArea');gameStarted();const qs=[['Happy',['Chair','Smile','Window'],1],['Cold',['Ice','Fire','Sun'],0],['Kind',['Angry','Caring','Loud'],1]];let n=0;a.innerHTML='<h3>Word Match</h3><p class="card-description">Choose the related word.</p><div id="wordQuestion"></div>';function show(){const q=qs[n];const buttons=q[1].map((x,i)=>'<button class="small-button" onclick="window.__wordAnswer('+i+')">'+x+'</button>').join('');document.getElementById('wordQuestion').innerHTML='<p class="card-description">Which word is related to "'+q[0]+'"?</p><div class="button-row">'+buttons+'</div><div id="wordStatus" class="card-description"></div>'}window.__wordAnswer=function(i){const q=qs[n];const st=document.getElementById('wordStatus');if(i!==q[2]){st.textContent='Not quite. Try again!';return}n++;if(n===qs.length){st.textContent='Excellent! 🎉';gameWon('words',qs.length);a.insertAdjacentHTML('beforeend',nextButtons('startWordGame'));tone()}else{st.textContent='Correct!';setTimeout(show,450)}};show()};
+  /* Existing music-memory card remains informational, but its listen button works through original speak(). */
+
+  /* ---------- dashboard analytics bar ---------- */
+  function updateDashboard(){const d=document.getElementById('dashboard');if(!d)return;let c=document.getElementById('mcDashAnalytics');if(!c){c=document.createElement('div');c.id='mcDashAnalytics';c.className='card';c.style.marginTop='18px';c.innerHTML='<h2>📊 Your progress</h2><p class="card-description">Your memory activity at a glance.</p><div class="mc-stat-row"><div class="mc-stat"><strong id="mcDG">0</strong>Games</div><div class="mc-stat"><strong id="mcDW">0</strong>Completed</div><div class="mc-stat"><strong id="mcDB">0</strong>Best score</div></div><div class="mc-bar"><span id="mcDP"></span></div><div class="button-row"><button class="small-button" onclick="openAnalytics()">View Analytics</button><button class="small-button" onclick="openSkincare()">🌸 Skincare</button></div>';d.appendChild(c)}document.getElementById('mcDG').textContent=stats.games;document.getElementById('mcDW').textContent=stats.wins;document.getElementById('mcDB').textContent=stats.best;document.getElementById('mcDP').style.width=(stats.games?Math.min(100,stats.wins/stats.games*100):0)+'%'}
+  window.updateProgress=()=>{};
+
+  /* ---------- nearby chat persistence ---------- */
+  window.sendNearbyMessage=function(){const input=document.getElementById('nearbyInput'),box=document.getElementById('nearbyMessages');if(!input||!box)return;const text=input.value.trim();if(!text)return;const m=document.createElement('div');m.className='message mine';m.innerHTML='<small>You</small>'+esc(text)+' <button class="mc-speak" type="button">🔊</button>';m.querySelector('button').onclick=()=>speak(text);box.appendChild(m);input.value='';box.scrollTop=box.scrollHeight;if(settings.autoRead&&settings.voiceSound)speak(text);save()};
+  window.joinCommunity=function(name){toast('Connection request sent to '+name+'.');tone()};
+  window.startBluetooth=function(){toast('Nearby discovery started in demo mode.');tone()};
+
+  /* ---------- AI companion ---------- */
+  window.sendAI=function(){const input=document.getElementById('aiInput'),box=document.getElementById('aiMessages');if(!input||!box)return;const text=input.value.trim();if(!text)return;const u=document.createElement('div');u.className='message mine';u.innerHTML='<small>You</small>'+esc(text)+' <button class="mc-speak" type="button">🔊</button>';u.querySelector('button').onclick=()=>speak(text);box.appendChild(u);input.value='';box.scrollTop=box.scrollHeight;setTimeout(()=>{let reply='I\'m here with you. Thank you for sharing that. Would you like to try a memory activity together?';const t=text.toLowerCase();if(/sad|lonely|upset|worried|anxious/.test(t))reply='I\'m glad you told me. Take a slow breath and remember you are not alone. Would you like to talk about what happened?';else if(/game|memory/.test(t))reply='Of course. You can open Memory Games and choose Picture Pairs, Sudoku, Block Lines, Sequence or Word Match.';else if(/hello|hi|namaste/.test(t))reply='Hello! It is lovely to hear from you. How are you feeling today?';const r=document.createElement('div');r.className='message';r.innerHTML='<small>MindCare Companion</small>'+esc(reply)+' <button class="mc-speak" type="button">🔊</button>';r.querySelector('button').onclick=()=>speak(reply);box.appendChild(r);box.scrollTop=box.scrollHeight;if(settings.autoRead&&settings.voiceSound)speak(reply);tone()},500)};
+
+  /* ---------- emergency ---------- */
+  window.callEmergency=function(){if(confirm('Are you sure you want to call emergency services?'))window.location.href='tel:112'};
+
+  /* ---------- navigation additions ---------- */
+  function addNav(){const nav=document.querySelector('.nav');if(!nav)return;[['⚙️ Settings',openSettings,'mcNavSettings'],['🌸 Skincare & Self-care',openSkincare,'mcNavSkin'],['📊 Analytics',updateAnalytics,'mcNavAnalytics']].forEach(([label,fn,id])=>{if(document.getElementById(id))return;const b=document.createElement('button');b.id=id;b.type='button';b.textContent=label;b.onclick=fn;nav.appendChild(b)})}
+
+  /* ---------- journal ---------- */
+  window.saveJournal=function(){const e=document.getElementById('journalText');if(!e)return;localStorage.setItem('mindcareJournal',e.value);toast('Your note has been saved');tone()};
+  window.loadJournal=function(){const e=document.getElementById('journalText');if(e)e.value=localStorage.getItem('mindcareJournal')||''};
+
+  function init(){applySettings();addNav();addMics();if(localStorage.getItem('mindcareProfile'))showApp();else{document.getElementById('loginPage').style.display='flex';document.getElementById('app').style.display='none'}updateDashboard();loadJournal()}
+  document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+
+
+</body>
+</html>
